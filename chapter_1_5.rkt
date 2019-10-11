@@ -1,4 +1,5 @@
 #lang sicp
+;;lambda
 
 ;;exercise 1.34
 (define (f g) (g 2))
