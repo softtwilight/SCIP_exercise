@@ -1,5 +1,11 @@
 #lang sicp
 
+;;abstarct the procedure on more high level
+;;  -> iterative improvement  ->  find a fix point function, make the value more stable
+;;  ->  a standart for decide good enough + a procedure to improve guess
+;; ->  when improve , how , how to decide next argument. (average-damp, Newton's method)
+
+
 ;;exercise 1.46
 (define (iter-improve good-enough? improve)
   (lambda (x)
