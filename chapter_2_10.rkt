@@ -90,5 +90,38 @@
 (count-leaves x) ;; -> 5
 (count-leaves-iter x) ;; -> 5
 
+(define (fold-left op initial sequence)
+  (define (iter result rest)
+    (if (null? rest)
+        result
+        (iter (op result (car rest))
+              (cdr rest))))
+  (iter initial sequence))
+
+
+(accumulate / 1 (list 1 2 3))
+(fold-left / 1 (list 1 2 3))
+(accumulate list nil (list 1 2 3))
+(fold-left list (list 3) (list 2 1 nil))
+(accumulate / 1 (list 1 2 1 2 1))
+(fold-left / 1 (list 1 2 1 2 1))
+
+;; exercise_2.39
+(define fold-right accumulate)
+(define (reverse seq)
+  (fold-right (lambda (x y) (append y (list x)))
+              nil
+              seq))
+(define (reverse2 seq)
+  (fold-left (lambda (x y) (cons y x))
+             nil
+             seq))
+(reverse x)
+(reverse2 x)
+
+
+
+                
+
 
                 
