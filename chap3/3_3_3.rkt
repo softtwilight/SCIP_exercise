@@ -15,9 +15,9 @@
     (if record
         (set-cdr! record value)
         (set-cdr! table
-                  (cons (cons key value)
+                  (cons (cons key value
                         (cdr table)))))
-  'ok)
+  'ok))
 (define (make-table)
   (list '*table*))
 
@@ -89,54 +89,48 @@ dispatch))
 
 ;; the n is unnessary in fact, we can get n from keys length.
 ;; TODO refactor.
-(define (higl-order-make-table n)
+(define (higl-order-make-table)
   (let ((local-table (list '*table*)))
-    (define (iter-look table keys n)
+    (define (iter-look table keys)
       (let ((sub (assoc (car keys) (cdr table))))
-        (if (= n 1)
+        (if (null? (cdr keys))
             (if sub
                 (cdr sub)
                 #f)    
             (if sub
-                (iter-look sub (cdr keys) (- n 1))
+                (iter-look sub (cdr keys))
                 #f))))
     (define (inner-look keys)
-      (iter-look local-table keys n))
+      (iter-look local-table keys))
 
-
-    (define (iter-build keys value n)
-      (if (= n 1)
-          (cons (car keys) value)
-          (cons (list (car keys)
-                      (iter-build (cdr keys) value (- n 1)))
-                (cons '() '()))))
-    (define (iter-insert table keys value n)
+    (define (iter-insert table keys value)
       (let ((sub (assoc (car keys) (cdr table))))
-        (if (= n 1)
+        (if (null? (cdr keys))
             (if sub
                 (set-cdr! sub value)
                 (set-cdr! table
                           (cons (cons (car keys) value)
                                 (cdr table))))
             (if sub
-                (iter-insert sub (cdr keys) value (- n 1))
+                (iter-insert sub (cdr keys) value)
                 (begin (set-cdr! table
                                  (cons (list (car keys))
                                              (cdr table)))
-                       (iter-insert table keys value n))))))
+                       (iter-insert table keys value))))))
         
     (define (inner-insert keys value)
-      (iter-insert local-table keys value n))
+      (iter-insert local-table keys value))
     (define (dispatch m)
       (cond ((eq? m 'insert) inner-insert)
             ((eq? m 'look-up) inner-look)
             (else (error "error msg" m))))
     dispatch))
-(define t2 (higl-order-make-table 3))
+(define t2 (higl-order-make-table))
 ((t2 'insert) (list 'a 'b 'c) 'yxl)
+((t2 'insert) (list 'a 'b 'e 'f) 'douge)
 ((t2 'look-up) (list 'a 'b 'c))
 ((t2 'look-up) (list 'a 'b 'd))
- 
+ ((t2 'look-up) (list 'a 'b 'e 'f))
              
 
   
