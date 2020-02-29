@@ -1,4 +1,4 @@
 # SICP_exercise
-the learning of 《Structure and Interpretation of Computer Programs》
+The exercises of 《Structure and Interpretation of Computer Programs》(SICP).  
 
-run in Racket, use sicp package.
+Run in Racket, use sicp package.
