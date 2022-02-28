@@ -49,5 +49,19 @@
 
 (define (sqrt x)
   (fixed-point (lambda (y) (avg y (/ x y))) 1.0))
-                       
+
+(define (compose g f)
+  (lambda (x) (f (g x))))
+
+(define (repeat f n)
+  (cond ((= n 1) f)
+        ((even? n) (repeat (compose f f) (/ n 2)))
+        (else (compose f (repeat f (- n 1))))))
+
+
+
+
+
+
+
 (provide (all-defined-out))
