@@ -58,7 +58,11 @@
         ((even? n) (repeat (compose f f) (/ n 2)))
         (else (compose f (repeat f (- n 1))))))
 
-
+(define (assertEqual expect actual)
+  (if (= expect actual)
+      (print "success")
+      (begin
+        (display "expect: ") (display expect) (display ";actual: ") (display actual)(newline))))
 
 
 
