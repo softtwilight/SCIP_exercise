@@ -12,6 +12,7 @@
 (define (cube x) (* x x x))
 
 (define (even? x) (= (% x 2) 0))
+(define (odd? x) (not (even? x)))
 
 (define (gcd a b)
   (if (= b 0)
