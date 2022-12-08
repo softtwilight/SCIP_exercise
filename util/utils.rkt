@@ -1,9 +1,10 @@
- #lang racket
+#lang racket
 (define (square x) (* x x))
 
 (define (print x) (display x) (newline))
 
 (define (avg x y) (/ (+ x y) 2))
+(define (inc i) (+ 1 i))
 
 (define (identity x) x)
 
@@ -65,8 +66,13 @@
       (begin
         (display "expect: ") (display expect) (display ";actual: ") (display actual)(newline))))
 
+(define nil '())
 
-
+(define (accumulate op initial seq)
+  (if (null? seq)
+      initial
+      (op (car seq)
+          (accumulate op initial (cdr seq)))))
 
 
 (provide (all-defined-out))
