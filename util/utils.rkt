@@ -74,5 +74,7 @@
       (op (car seq)
           (accumulate op initial (cdr seq)))))
 
+(define (flatmap proc seq)
+  (accumulate append nil (map proc seq)))
 
 (provide (all-defined-out))
