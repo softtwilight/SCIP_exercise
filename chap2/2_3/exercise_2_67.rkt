@@ -1,4 +1,11 @@
 #lang racket
+(#%require "../../util/utils.rkt")
+
+(define (element-of-set? x set)
+  (accumulate (lambda (a b) (or a b))
+              #f
+              (map (lambda (s) (equal? s x))
+                   set)))
 
 (define (make-leaf symbol weight) (list 'leaf symbol weight))
 (define (leaf? object) (eq? (car object) 'leaf))
@@ -65,3 +72,26 @@
 ;; 2.67
 ;; '(A D A B B C A)
 (decode sample-message sample-tree)
+
+(define symbol-message '(A D A B B C A))
+
+;; 2.68
+(define (encode-symbol symbol tree)
+  (define (helper x current-branch)
+    (if (leaf? current-branch)
+        '()
+        (if (element-of-set? x (symbols (left-branch current-branch)))
+            (cons 0 (helper x (left-branch current-branch)))
+            (cons 1 (helper x (right-branch current-branch))))))
+  (if (not (element-of-set? symbol (symbols tree)))
+      (error "symbol not in the tree" symbol)
+      (helper symbol tree)))
+                           
+
+(define (encode message tree)
+  (if (null? message)
+      '()
+      (append (encode-symbol (car message) tree)
+              (encode (cdr message) tree))))
+;; '(0 1 1 0 0 1 0 1 0 1 1 1 0)
+(encode symbol-message sample-tree)
