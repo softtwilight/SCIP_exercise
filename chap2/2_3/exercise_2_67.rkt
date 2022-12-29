@@ -95,3 +95,23 @@
               (encode (cdr message) tree))))
 ;; '(0 1 1 0 0 1 0 1 0 1 1 1 0)
 (encode symbol-message sample-tree)
+
+
+;; 2.69
+(define (successive-merge nodes)
+  (if (= 1 (length nodes))
+      (car nodes)
+      (let ((first (car nodes))
+            (second (cadr nodes)))
+        (successive-merge
+         (adjoin-set (make-code-tree first second) (cddr nodes))))))
+        
+      
+(define (generate-huffman-tree pairs)
+  (successive-merge (make-leaf-set pairs)))
+
+(define pairs (list '(A 4) '(B 2) '(C 1) '(D 1)))
+(define new-tree (generate-huffman-tree pairs))
+sample-tree
+new-tree
+(encode symbol-message new-tree)
