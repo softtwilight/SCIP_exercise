@@ -129,3 +129,10 @@ new-tree
 (length (encode song lyrics-tree))
 ;; minmun fixed-length code 108
 (* 3 (length song))
+
+;; 2.71
+;; 1 bit for most frequent symbol, (n - 1) bit for least frequent symbol
+
+;; 2.72
+;; for most frequent symbol, is O(1)
+;; for least frequent symbol, is O(n)
